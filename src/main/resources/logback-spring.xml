@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+	<property name="LOG_HOME" value="C:/project/log/api" />
+	<property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} %-5level[%C.%M:%L] - [%X{traceId}],%msg%n"/>
+	
+	
+	<!-- appender : 로그 출력 위치 설정 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoder : 로그 출력 형식 설정 -->
+		<encoder>
+			<Pattern>${LOG_PATTERN}</Pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="FILE-LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+		<file>${LOG_HOME}/service.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/backup/service.%d{yyyy-MM-dd}.log.%i.gz</fileNamePattern>
+			<maxHistory>365</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+	</appender>
+	
+	<!-- sql을 보여줌 -->
+	<logger name="jdbc.sqlonly" level="INFO" additivity="false">		
+		<appender-ref ref="console" />
+		<appender-ref ref="FILE-LOG" />		
+	</logger>
+	
+	<!-- sql 조회 결과를 보여줌 -->
+	<logger name="jdbc.resultsettable" level="INFO" additivity="false">
+		<appender-ref ref="console" />
+		<appender-ref ref="FILE-LOG" />		
+	</logger>
+	
+	<!-- Connection 연결과 종료를 보여줌 -->
+	<logger name="jdbc.connection" level="INFO" additivity="false">
+		<appender-ref ref="console" />
+		<appender-ref ref="FILE-LOG" />		
+	</logger>	
+	
+	<!-- logger : 로그 출력 요소로 level 속성을 통해 출력할 로그를 appender에 전달 -->
+	<logger name="org.springframework" level="INFO" additivity="false">
+		<appender-ref ref="console" />
+		<appender-ref ref="FILE-LOG" />
+	</logger>
+	
+	<logger name="com.example.web" level="INFO" additivity="false">
+		<appender-ref ref="console" />
+		<appender-ref ref="FILE-LOG" />
+	</logger>
+	
+	<root level="off">
+		<appender-ref ref="console" />
+	</root>
+</configuration>
