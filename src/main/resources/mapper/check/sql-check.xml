@@ -10,8 +10,8 @@
 	</insert>
 
 	<select id="selectCheckList" parameterType="com.example.api.check.vo.CheckVo" resultType="com.example.api.check.vo.CheckVo">
-		select idx, id, regdt
-		from tb_test
+		select a1, a2, a3
+		from test
 	</select>
 
 </mapper>

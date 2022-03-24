@@ -7,7 +7,7 @@ import java.sql.Date;
 @Data
 public class CheckVo {
 
-    private int idx;
-    private String id;
-    private Date regdt;
+    private String a1;
+    private String a2;
+    private String a3;
 }
